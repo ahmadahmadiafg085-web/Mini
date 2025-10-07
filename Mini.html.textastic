@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vortex Security - Mini App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0; background: #121212; color: #e0e0e0;
+            direction: rtl;
+        }
+        header {
+            background-color: #1f2937;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        main {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #1e1e2f;
+            border-radius: 10px;
+            box-shadow: 0 0 8px #3f51b5;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        label, select, input, button, textarea {
+            font-size: 1rem;
+            margin-top: 8px;
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            box-sizing: border-box;
+        }
+        button {
+            background: #3f51b5;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #6573c3;
+        }
+        .lang-switch {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .lang-switch button {
+            width: auto;
+            margin: 0 5px;
+            direction: ltr;
+        }
+        .admin-panel {
+            background-color: #262f3f;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .hidden {
+            display: none;
+        }
+        .info {
+            background-color: #2a2d42;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        textarea {
+          resize: vertical;
+          min-height: 50px;
+        }
+        hr {
+            border: 1px solid #3f51b5;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+    <header id="header-title">وورتکس سکوریتی</header>
+    <main>
+        <div class="lang-switch">
+            <button id="btn-fa">فارسی</button>
+            <button id="btn-en">English</button>
+        </div>
+
+        <section id="info-section">
+            <h2 data-lang="fa">خوش آمدید به Vortex Security</h2>
+            <h2 data-lang="en" class="hidden">Welcome to Vortex Security</h2>
+            <p data-lang="fa">
+                اپلیکیشن امنیت سایبری حرفه‌ای شما با قابلیت مدیریت پرداخت‌ها و تنظیمات ادمین.
+            </p>
+            <p data-lang="en" class="hidden">
+                Your professional cybersecurity app with admin settings and payment gateway management.
+            </p>
+        </section>
+
+        <section id="payment-section">
+            <h3 data-lang="fa">درگاه پرداخت</h3>
+            <h3 data-lang="en" class="hidden">Payment Gateway</h3>
+
+            <label data-lang="fa" for="pay-gateway">انتخاب درگاه پرداخت</label>
+            <label data-lang="en" for="pay-gateway" class="hidden">Select Gateway</label>
+            <select id="pay-gateway"></select>
+
+            <button id="pay-btn" data-lang="fa">پرداخت</button>
+            <button id="pay-btn" data-lang="en" class="hidden">Pay Now</button>
+        </section>
+
+        <section id="admin-section" class="admin-panel">
+            <h3 data-lang="fa">پنل مدیریت</h3>
+            <h3 data-lang="en" class="hidden">Admin Panel</h3>
+
+            <label><input type="checkbox" id="toggle-fa" /> فعال بودن زبان فارسی</label>
+            <label><input type="checkbox" id="toggle-en" /> فعال بودن زبان انگلیسی</label>
+
+            <hr />
+
+            <label for="header-title-fa">عنوان صفحه (فارسی)</label>
+            <input type="text" id="header-title-fa" placeholder="مثلا وورتکس سکوریتی" />
+
+            <label for="header-title-en">Page Title (English)</label>
+            <input type="text" id="header-title-en" placeholder="e.g. Vortex Security" />
+
+            <label for="info-text-fa">متن خوش آمدگویی (فارسی)</label>
+            <textarea id="info-text-fa">اپلیکیشن امنیت سایبری حرفه‌ای شما با قابلیت مدیریت پرداخت‌ها و تنظیمات ادمین.</textarea>
+
+            <label for="info-text-en">Welcome Text (English)</label>
+            <textarea id="info-text-en">Your professional cybersecurity app with admin settings and payment gateway management.</textarea>
+
+            <hr />
+
+            <label>درگاه‌های پرداخت:</label>
+            <div>
+                <label>
+                    <input type="checkbox" id="toggle-paypal" />
+                    پی‌پل (PayPal)
+                </label>
+                <label>
+                    <input type="checkbox" id="toggle-stripe" />
+                    استرایپ (Stripe)
+                </label>
+            </div>
+
+            <label for="paypal-url">لینک پرداخت پی‌پل</label>
+            <input type="url" id="paypal-url" placeholder="https://paypal.com/yourpayment" />
+
+            <label for="stripe-url">Stripe Payment URL</label>
+            <input type="url" id="stripe-url" placeholder="https://stripe.com/yourpayment" />
+
+            <label for="pay-msg-fa">پیام پس از پرداخت (فارسی)</label>
+            <textarea id="pay-msg-fa">پرداخت از طریق درگاه انتخاب شده انجام شد. متشکریم!</textarea>
+
+            <label for="pay-msg-en">Payment Success Message (English)</label>
+            <textarea id="pay-msg-en">Payment via selected gateway succeeded. Thank you!</textarea>
+
+            <button id="save-settings-btn">ذخیره تنظیمات</button>
+        </section>
+    </main>
+
+    <script>
+        const elementsFa = document.querySelectorAll("[data-lang='fa']");
+        const elementsEn = document.querySelectorAll("[data-lang='en']");
+
+        const btnFa = document.getElementById("btn-fa");
+        const btnEn = document.getElementById("btn-en");
+
+        const toggleFa = document.getElementById("toggle-fa");
+        const toggleEn = document.getElementById("toggle-en");
+
+        const togglePaypal = document.getElementById("toggle-paypal");
+        const toggleStripe = document.getElementById("toggle-stripe");
+
+        const payGateway = document.getElementById("pay-gateway");
+        const payBtnFa = document.querySelector("#pay-btn[data-lang='fa']");
+        const payBtnEn = document.querySelector("#pay-btn[data-lang='en']");
+
+        const headerTitle = document.getElementById("header-title");
+        const headerTitleFa = document.getElementById("header-title-fa");
+        const headerTitleEn = document.getElementById("header-title-en");
+        const infoTextFa = document.getElementById("info-text-fa");
+        const infoTextEn = document.getElementById("info-text-en");
+
+        const paypalUrlInput = document.getElementById("paypal-url");
+        const stripeUrlInput = document.getElementById("stripe-url");
+
+        const payMsgFa = document.getElementById("pay-msg-fa");
+        const payMsgEn = document.getElementById("pay-msg-en");
+
+        const saveSettingsBtn = document.getElementById("save-settings-btn");
+
+        // زبان پیش فرض
+        let currentLang = "fa";
+
+        function switchToFa() {
+            currentLang = "fa";
+            elementsFa.forEach(el => el.classList.remove("hidden"));
+            elementsEn.forEach(el => el.classList.add("hidden"));
+            document.body.dir = "rtl";
+        }
+        function switchToEn() {
+            currentLang = "en";
+            elementsFa.forEach(el => el.classList.add("hidden"));
+            elementsEn.forEach(el => el.classList.remove("hidden"));
+            document.body.dir = "ltr";
+        }
+
+        btnFa.onclick = switchToFa;
+        btnEn.onclick = switchToEn;
+
+        // آپدیت نمایش زبان‌ها
+        function updateLangToggles() {
+            toggleFa.checked ? elementsFa.forEach(el => el.style.display = "") : elementsFa.forEach(el => el.style.display = "none");
+            toggleEn.checked ? elementsEn.forEach(el => el.style.display = "") : elementsEn.forEach(el => el.style.display = "none");
+        }
+
+        toggleFa.onchange = () => {
+            updateLangToggles();
+        };
+        toggleEn.onchange = () => {
+            updateLangToggles();
+        };
+
+        // مدیریت درگاه پرداخت و آپدیت لیست
+        function updateGateways() {
+            payGateway.innerHTML = "";
+            if (togglePaypal.checked) {
+                let optionFa = document.createElement("option");
+                optionFa.value = "paypal";
+                optionFa.textContent = currentLang === "fa" ? "پی‌پل" : "PayPal";
+                payGateway.appendChild(optionFa);
+            }
+            if (toggleStripe.checked) {
+                let optionFa = document.createElement("option");
+                optionFa.value = "stripe";
+                optionFa.textContent = currentLang === "fa" ? "استرایپ" : "Stripe";
+                payGateway.appendChild(optionFa);
+            }
+        }
+        togglePaypal.onchange = () => {
+            updateGateways();
+        };
+        toggleStripe.onchange = () => {
+            updateGateways();
+        };
+
+        // ذخیره تنظیمات در localStorage
+        saveSettingsBtn.onclick = () => {
+            const settings = {
+                languages: {
+                    fa: toggleFa.checked,
+                    en: toggleEn.checked
+                },
+                gateways: {
+                    paypal: togglePaypal.checked,
+                    stripe: toggleStripe.checked
+                },
+                titles: {
+                    fa: headerTitleFa.value.trim() || "وورتکس سکوریتی",
+                    en: headerTitleEn.value.trim() || "Vortex Security"
+                },
+                infoTexts: {
+                    fa: infoTextFa.value.trim() || "اپلیکیشن امنیت سایبری حرفه‌ای شما با قابلیت مدیریت پرداخت‌ها و تنظیمات ادمین.",
+                    en: infoTextEn.value.trim() || "Your professional cybersecurity app with admin settings and payment gateway management."
+                },
+                urls: {
+                    paypal: paypalUrlInput.value.trim(),
+                    stripe: stripeUrlInput.value.trim()
+                },
+                paymentMessages: {
+                    fa: payMsgFa.value.trim() || "پرداخت از طریق درگاه انتخاب شده انجام شد. متشکریم!",
+                    en: payMsgEn.value.trim() || "Payment via selected gateway succeeded. Thank you!"
+                }
+            };
+            localStorage.setItem("vortexSettings", JSON.stringify(settings));
+            alert("تنظیمات ذخیره شد!");
+            applySettings(settings);
+        };
+
+        // بارگذاری تنظیمات ذخیره شده
+        function applySettings(settings) {
+            toggleFa.checked = settings.languages.fa;
+            toggleEn.checked = settings.languages.en;
+            togglePaypal.checked = settings.gateways.paypal;
+            toggleStripe.checked = settings.gateways.stripe;
+            headerTitleFa.value = settings.titles.fa;
+            headerTitleEn.value = settings.titles.en;
+            infoTextFa.value = settings.infoTexts.fa;
+            infoTextEn.value = settings.infoTexts.en;
+            paypalUrlInput.value = settings.urls.paypal;
+            stripeUrlInput.value = settings.urls.stripe;
+            payMsgFa.value = settings.paymentMessages.fa;
+            payMsgEn.value = settings.paymentMessages.en;
+
+            // به‌روزرسانی زبان و درگاه‌ها
+            updateLangToggles();
+            updateGateways();
+
+            // بروزرسانی متن متغیرها در UI
+            headerTitle.textContent = currentLang === "fa" ? settings.titles.fa : settings.titles.en;
+            elementsFa.forEach(el => {
+                if (el.tagName === "H2") {
+                    el.textContent = settings.titles.fa;
+                } else if (el.tagName === "P") {
+                    el.textContent = settings.infoTexts.fa;
+                }
+            });
+            elementsEn.forEach(el => {
+                if (el.tagName === "H2") {
+                    el.textContent = settings.titles.en;
+                } else if (el.tagName === "P") {
+                    el.textContent = settings.infoTexts.en;
+                }
+            });
+        }
+
+        // بارگزاری اولیه تنظیمات اگر موجود باشد
+        window.onload = () => {
+            const saved = localStorage.getItem("vortexSettings");
+            if (saved) {
+                const settings = JSON.parse(saved);
+                applySettings(settings);
+            } else {
+                // مقداردهی اولیه
+                toggleFa.checked = true;
+                toggleEn.checked = true;
+                togglePaypal.checked = true;
+                toggleStripe.checked = true;
+                updateLangToggles();
+                updateGateways();
+            }
+            // تنظیم پیش‌فرض زبان نمایش
+            switchToFa();
+        };
+
+        // عملکرد دکمه پرداخت
+        payBtnFa.onclick = payBtnEn.onclick = () => {
+            const selected = payGateway.value;
+            const settings = JSON.parse(localStorage.getItem("vortexSettings")) || {};
+            let payUrl = "";
+            let msg = "";
+            if (selected === "paypal" && settings.urls && settings.urls.paypal) {
+                payUrl = settings.urls.paypal;
+                msg = settings.paymentMessages ? settings.paymentMessages[currentLang] : "پرداخت انجام شد.";
+            } else if (selected === "stripe" && settings.urls && settings.urls.stripe) {
+                payUrl = settings.urls.stripe;
+                msg = settings.paymentMessages ? settings.paymentMessages[currentLang] : "پرداخت انجام شد.";
+            } else {
+                alert(currentLang === "fa" ? "لطفا درگاه پرداخت فعال و لینک معتبر وارد کنید." : "Please activate gateway and enter valid URL.");
+                return;
+            }
+            alert(msg + "\n" + payUrl);
+            // اینجا می‌توانید کد اتصال واقعی به درگاه پرداخت را اضافه کنید.
+        };
+    </script>
+</body>
+</html>
